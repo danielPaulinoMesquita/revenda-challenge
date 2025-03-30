@@ -135,7 +135,7 @@ public class FactoryUtils {
     }
 
     public static CustomerOrderSummary getCustomerOrderSummary() {
-        return new CustomerOrderSummary("123", 888);
+        return new CustomerOrderSummary("123", 1800);
     }
 
     public static String toJson(final Object object) {

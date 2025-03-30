@@ -7,6 +7,14 @@ spring:
   task:
     scheduling:
       cron: 0 15 22 ? * *
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "prometheus,health,info,metrics"
+  endpoint:
+    health:
+      show-details: always
 business:
   rules:
     minimum: "1000"

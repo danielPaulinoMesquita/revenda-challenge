@@ -14,5 +14,6 @@ public interface OrderMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "resaleIsDone", ignore = true)
+    @Mapping(target = "orderResaleId", ignore = true)
     Order toOrder(OrderRequest orderRequest);
 }

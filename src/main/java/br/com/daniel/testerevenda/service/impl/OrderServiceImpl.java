@@ -68,10 +68,6 @@ public class OrderServiceImpl implements OrderService {
         return customerService.findById(customerId);
     }
 
-    private Order findByCustomerId(final String customerId) {
-        return orderRepository.findOrdersByCustomerId(customerId);
-    }
-
     @Override
     @Scheduled(cron = "0 * * * * *")
     public void schedulingResaleOrder() {
@@ -101,6 +97,8 @@ public class OrderServiceImpl implements OrderService {
             logger.warn("nenhum resumo de pedido encontrado para a quantidade mínima especificada.");
             return Collections.emptyList();
         }
+
+        System.out.println("Quantos e qual order chegou aqui. :"+ customerSummaries);
 
         List<String> customerIds = customerSummaries.stream()
                 .map(CustomerOrderSummary::getCustomerId)
@@ -147,11 +145,14 @@ public class OrderServiceImpl implements OrderService {
 
                 if (Objects.nonNull(res) &&
                         res.getStatusCode().is2xxSuccessful()) {
-                    Order order = findByCustomerId(resaleRequest.customerId());
+                    List<Order> ordersUpdated = orderRepository.findByCustomerIdIn(List.of(resaleRequest.customerId()))
+                            .stream().map(o -> {
+                                o.setOrderResaleId(Objects.requireNonNull(res.getBody()).orderId());
+                                o.setResaleIsDone(true);
+                                return o;
+                            }).collect(Collectors.toList());
 
-                    order.setOrderResaleId(res.getBody().orderId());
-                    order.setResaleIsDone(true);
-                    orderRepository.save(order);
+                    orderRepository.saveAll(ordersUpdated);
                 }
             } catch (RuntimeException e) {
                 logger.error("erro ao realizar ação de revenda: {}", e.getMessage());

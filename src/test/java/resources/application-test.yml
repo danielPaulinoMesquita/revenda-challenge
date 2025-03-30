@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: 'mongodb://root:root@localhost:27017/resale?authSource=admin'
+      uri: 'mongodb://root:root@localhost:27017/resale_test?authSource=admin'
       auto-index-creation: true
 business:
   rules:

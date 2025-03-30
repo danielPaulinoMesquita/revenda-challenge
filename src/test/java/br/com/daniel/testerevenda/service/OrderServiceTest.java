@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static br.com.daniel.testerevenda.utils.FactoryUtils.*;
@@ -74,6 +75,18 @@ public class OrderServiceTest {
         verify(orderRepository, atLeastOnce()).findByCustomerIdIn(any());
     }
 
+    @Test
+    void testProcessingSchedulingResaleWithProductsEnough() {
+        when(orderRepository.findOrdersByCustomerIdsWithTotalQuantityGreaterThan(anyInt()))
+                .thenReturn(List.of(getCustomerOrderSummary(), getCustomerOrderSummary()));
+
+        when(orderRepository.findByCustomerIdIn(any())).thenReturn(List.of(getOrder(), getOrder()));
+
+        orderService.schedulingResaleOrder();
+
+        verify(orderRepository, atLeastOnce()).findOrdersByCustomerIdsWithTotalQuantityGreaterThan(anyInt());
+        verify(orderRepository, atLeastOnce()).findByCustomerIdIn(any());
+    }
 
     @Test
     void testSchedulingResaleCallExternalApi() {
@@ -117,6 +130,30 @@ public class OrderServiceTest {
 
         orderService.schedulingResaleOrder();
 
+        verify(orderRepository, never()).save(any());
+    }
+
+    @Test
+    void testSchedulingResaleNoProductsEnough() {
+        when(orderRepository.findOrdersByCustomerIdsWithTotalQuantityGreaterThan(anyInt()))
+                .thenReturn(Arrays.asList());
+
+        orderService.schedulingResaleOrder();
+
+        verify(orderRepository, never()).findByCustomerIdIn(any());
+        verify(resaleCompanyFeignClient, never()).getResaleOrder(any());
+        verify(orderRepository, never()).save(any());
+    }
+
+    @Test
+    void testSchedulingResaleNullPointer() {
+        when(orderRepository.findOrdersByCustomerIdsWithTotalQuantityGreaterThan(anyInt()))
+                .thenThrow(NullPointerException.class);
+
+        orderService.schedulingResaleOrder();
+
+        verify(orderRepository, never()).findByCustomerIdIn(any());
+        verify(resaleCompanyFeignClient, never()).getResaleOrder(any());
         verify(orderRepository, never()).save(any());
     }
 

@@ -12,13 +12,13 @@ import java.util.List;
 public interface OrderRepository extends MongoRepository<Order, String> {
 
     @Aggregation(pipeline = {
-            "{ $unwind: '$produtos' }", // Desdobra o array de produtos
-            "{ $group: { _id: '$customerId', totalQuantity: { $sum: '$produtos.quantidade' } } }", // Soma as quantidades
-            "{ $match: { totalQuantity: { $gte: ?0 } } }" // Filtra pela quantidade total, incluindo 100
+            "{ $match: { resaleIsDone: false }}",
+            "{ $unwind: '$produtos' }",
+            "{ $group: { _id: '$customerId', totalQuantity: { $sum: '$produtos.quantidade' } } }",
+            "{ $match: { totalQuantity: { $gte: ?0 } } }",
+            "{ $project: { customerId: '$_id', totalQuantity: 1, _id: 0 } }"
     })
     List<CustomerOrderSummary> findOrdersByCustomerIdsWithTotalQuantityGreaterThan(int minQuantity);
-
-    //List<CustomerOrderSummary> findCustomerIdsWithTotalQuantityGreaterThan(int minQuantity);
 
     List<Order> findByCustomerIdIn(List<String> customerIds);
 

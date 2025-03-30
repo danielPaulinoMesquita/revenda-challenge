@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: 'teste-revenda'
+  data:
+    mongodb:
+      uri: 'mongodb://root:root@localhost:27017/resale?authSource=admin'
+  task:
+    scheduling:
+      cron: 0 15 22 ? * *
+business:
+  rules:
+    minimum: "1000"
+    attempts: 3

@@ -4,6 +4,12 @@
 
 Este projeto é uma aplicação Spring Boot que pode ser testada utilizando Docker. Abaixo estão as instruções para rodar a aplicação e testar os endpoints.
 
+## Faça o deploy da aplicação apra utilizar os container.
+
+Eu não subi a imagem da aplicação para o docker hub, então por gentileza, caso queiram testar a aplicação utilizando o compose, faça o deploy do projeto utilizando o comando:
+
+````mvn package````
+
 ## Rodando a Aplicação com Docker Compose
 Foi criado um Dockerfile e um arquivo docker-compose.yml para facilitar a execução e os testes da aplicação de forma rápida. Para rodar a aplicação, 
 siga os passos abaixo na raíz do projeto (mesma pasta do docker-compose.yml). É necessário ter o Docker Compose instalado na sua máquina.

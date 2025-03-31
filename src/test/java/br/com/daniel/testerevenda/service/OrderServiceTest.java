@@ -29,8 +29,6 @@ public class OrderServiceTest {
     @Autowired
     private OrderService orderService;
 
-    private int minQuantity = 5;
-
     @MockitoBean
     private OrderRepository orderRepository;
 

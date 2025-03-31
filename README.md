@@ -20,7 +20,7 @@ Após subir os containers, você pode acessar os seguintes serviços:
 - **Spring Boot App:** [http://localhost:8080](http://localhost:8080)
 - **Prometheus:** [http://localhost:9090](http://localhost:9090)
 - **Grafana:** [http://localhost:3000](http://localhost:3000)  
-  **Usuário e Senha:** `admin / admin`
+  **Usuário e Senha (Grafana):** `admin / admin` talvez só logue na segunda tentativa.
 
 ## Funcionalidades
 
@@ -45,6 +45,8 @@ Você pode adicionar dashboards para visualizar gráficos no Grafana. Você pode
 
 Ou você pode usar o dashboard de **Spring Boot 2.1 Statistics** com o seguinte ID: `10280`.
 
+![img.png](img.png)
+
 ## Testando os Endpoints
 
 Aqui estão os endpoints disponíveis na API:
@@ -58,8 +60,8 @@ POST http://localhost:8080/api/customer
 ```json
 {
   "cnpj": "21.888.453/0001-88",
-  "razaoSocial": "Ambev",
-  "nomeFantasia": "AMBEV S.A",
+  "razaoSocial": "Secreta",
+  "nomeFantasia": "Secreta S.A",
   "email": "empresa@example.com",
   "telefone": [
     "12345-6789",

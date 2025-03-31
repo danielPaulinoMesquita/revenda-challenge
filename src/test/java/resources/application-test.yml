@@ -1,9 +1,0 @@
-spring:
-  data:
-    mongodb:
-      uri: 'mongodb://root:root@localhost:27017/resale_test?authSource=admin'
-      auto-index-creation: true
-business:
-  rules:
-    minimum: "2"
-    attempts: 2

@@ -1,4 +1,4 @@
-package br.com.daniel.testerevenda;
+package br.com.daniel.testerevenda.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.retry.annotation.EnableRetry;

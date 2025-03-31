@@ -3,7 +3,7 @@ spring:
     name: 'teste-revenda'
   data:
     mongodb:
-      uri: 'mongodb://root:root@localhost:27017/resale?authSource=admin'
+      uri: '${SPRING_DATA_MONGODB_URI}'
   task:
     scheduling:
       cron: 0 15 22 ? * *

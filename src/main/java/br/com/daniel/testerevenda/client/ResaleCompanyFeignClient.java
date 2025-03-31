@@ -7,12 +7,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(
-        name = "resale",
-        url = "http://localhost:3000"
-)
-public interface ResaleCompanyFeignClient {
+// todo Eu usaria este Feign para fazer a requisição
+//@FeignClient(
+//        name = "resale",
+//        url = "http://localhost:3000"
+//)
+//public interface ResaleCompanyFeignClient {
+//
+//    @PostMapping("/resale")
+//    ResponseEntity<ResaleResponse> getResaleOrder(@RequestBody ResaleRequest order);
+//}
 
-    @PostMapping("/resale")
+
+public interface ResaleCompanyFeignClient {
     ResponseEntity<ResaleResponse> getResaleOrder(@RequestBody ResaleRequest order);
 }
+
